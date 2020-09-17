@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 
 namespace ServerFunctions
 {
+    //[ServiceContract]
+    //[ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Reentrant)]
     public class Service : IService
     {
@@ -94,10 +96,9 @@ namespace ServerFunctions
                     {
                         // Отправляем ответ
                         item.operationContext.GetCallbackChannel<IMyContractCallBack>().MsgCallback(answer);
-                        //item.operationContext.GetCallbackChannel<IMyContractCallBack>().GetUsersOnline(GetUsers());
 
 
-                        Console.WriteLine($"{item.ID} в сети");
+                        Console.WriteLine($"Сообщение от idUser {UserID} отправлено idUser {item.ID}");
                     }
                 }
                 catch (Exception ex)
@@ -175,7 +176,6 @@ namespace ServerFunctions
                     if (HasOnline == true)
                     {
                         // Отправляем ответ
-                        //item.operationContext.GetCallbackChannel<IMyContractCallBack>().MsgCallback(answer);
                         item.operationContext.GetCallbackChannel<IMyContractCallBack>().UserConnected(GetUsers());
 
 

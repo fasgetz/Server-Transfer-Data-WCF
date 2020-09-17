@@ -9,8 +9,8 @@ namespace ServerFunctions
 {
 
 
-
-    [ServiceContract(SessionMode = SessionMode.Required, CallbackContract = typeof(IMyContractCallBack))]
+    [ServiceContract(CallbackContract = typeof(IMyContractCallBack))]
+    //[ServiceContract(SessionMode = SessionMode.Allowed, CallbackContract = typeof(IMyContractCallBack))]
     public interface IService
     {
 

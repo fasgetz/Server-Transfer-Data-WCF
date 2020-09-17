@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerClient", "..\ServerClient\ServerClient.csproj", "{4079798B-8D3C-45C7-8FA1-6FD0E83AA623}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerFunctions", "..\ServerFunctions\ServerFunctions.csproj", "{6FAFE675-E90F-4A9F-A8B0-603168619AD2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerFunctions", "ServerFunctions.csproj", "{6FAFE675-E90F-4A9F-A8B0-603168619AD2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
