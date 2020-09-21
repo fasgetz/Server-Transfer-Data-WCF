@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
@@ -43,11 +44,26 @@ namespace ServerFunctions
         /// <param name="UserID">Айди пользователя</param>
         [OperationContract(IsOneWay = true)]
         void SendMessage(string Message, int UserID);
+
+
+        /// <summary>
+        /// Метод для отправки сообщения
+        /// </summary>
+        /// <param name="File">Файл</param>
+        /// <param name="UserID">Айди пользователя</param>
+        [OperationContract(IsOneWay = true)]
+        void SendFile(string file, int UserID);
+
+
     }
 
     [ServiceContract]
     public interface IMyContractCallBack
     {
+        [OperationContract(IsOneWay = true)]
+        void FileCallback(string file);
+
+
         [OperationContract(IsOneWay = true)]
         void MsgCallback(string msg);
 

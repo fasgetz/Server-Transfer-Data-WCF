@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
@@ -12,7 +13,7 @@ namespace ServerFunctions
 {
     //[ServiceContract]
     //[ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Reentrant)]
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple, UseSynchronizationContext = true)]
     public class Service : IService
     {
         #region Свойства
@@ -189,6 +190,50 @@ namespace ServerFunctions
                 }
             }
         }
+
+        /// <summary>
+        /// Метод отправки файла
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="UserID"></param>
+        public void SendFile(string file, int UserID)
+        {
+            // Сохраняем файл в директории
+            File.WriteAllText($@"FileService/file", file);
+
+
+
+            // Отправляем файл всем юзерам кроме него самого
+            foreach (var item in new List<ServerUser>(users.Where(i => i.ID != UserID)))
+            {                
+
+                // Проверяем находится ли юзер в сети
+                // Получаем ответ
+                try
+                {
+                    bool HasOnline = item.operationContext.GetCallbackChannel<IMyContractCallBack>().HasOnline();
+
+                    // Если пользователь в сети, то отправить сообщение
+                    if (HasOnline == true)
+                    {
+                        item.operationContext.GetCallbackChannel<IMyContractCallBack>().FileCallback("file");
+
+
+                        Console.WriteLine($"Файл от idUser {UserID} отправлен idUser {item.ID}");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Иначе отключаем пользователя
+                    Disconnect(item.ID);
+                }
+
+
+
+            }
+        }
+
+
 
 
 
